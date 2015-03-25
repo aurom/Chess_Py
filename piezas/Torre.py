@@ -1,4 +1,4 @@
-from abc_base import Pieza
+from Pieza import Pieza
 
 """Clase para pieza torre""" 
 class Torre(Pieza):
@@ -7,6 +7,10 @@ class Torre(Pieza):
 	def __init__(self, _current):
 		self._current = _current
 
+	#Tostring 
+	def __str__(self):
+		return "♜"
+
 	#@Override
 	def get_movimientos():
-
+		pass	

@@ -27,11 +27,12 @@ class Pieza():
 	@abc.abstractmethod
 	def mueve(coordenada):
 		#stuff
+		return 
 
 	"""Elimina la pieza del tablero en caso de ser comida"""
 	@abc.abstractmethod
 	def eliminar_pieza():
-
+		return
 
 
 
