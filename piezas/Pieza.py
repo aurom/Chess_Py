@@ -29,6 +29,14 @@ class Pieza():
 	@abc.abstractmethod
 	def get_color(self):
 		return
+
+	"""Comprueba si dado un entero n se encuentra en el 
+	rango valido del tamaño del arreglo"""
+	@staticmethod
+	def enRango(n): 
+		return n <= 8 and n >= 0
+
+
 	
 
 
