@@ -8,31 +8,28 @@ y deberán impletementar los métodos
 class Pieza():
 	__metaclass_ = abc.ABCMeta #no sé que es
 
+	"""Constructor para Pieza"""
+	def __init__(self, _current, color):
+		self._current = _current
+		self.color = color 
 	"""Regresa una lista de tuplas con los movimientos 
 	posibles de la pieza"""
 	@abc.abstractmethod
-	def get_movimientos():
+	def get_movimientos(self):
 		#Algo 
 		return 
 
 	"""regresa una tupla con su posicion actual"""
 	@abc.abstractmethod
-	def get_posicion():
+	def get_posicion(self):
 		return 
 
-	"""
-	Mueve una piezas a la posicion que se pasa como parametro
-	NO MOVER A MENOS QUE SE HAYA COMPROBADO QUE ES UN MOVIMIENTO VÁLIDO
-	"""
-	@abc.abstractmethod
-	def mueve(coordenada):
-		#stuff
-		return 
 
-	"""Elimina la pieza del tablero en caso de ser comida"""
+	"""Regresa el color de la pieza"""
 	@abc.abstractmethod
-	def eliminar_pieza():
+	def get_color(self):
 		return
+	
 
 
 
