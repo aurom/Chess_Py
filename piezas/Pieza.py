@@ -35,8 +35,8 @@ class Pieza():
 	def get_color(self):
 		return self.color 
 
-	"""Comprueba si dado un entero n se encuentra en el 
-	rango valido del tamaño del arreglo"""
+	"""Comprueba si dado parametros n se encuentran en el 
+	rango valido del tamaño de la matriz"""
 	def enRango(self, n): 
 		return n <= 7 and n >= 0
 

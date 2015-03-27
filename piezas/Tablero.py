@@ -24,6 +24,8 @@ class Tablero(object):
 	"""
 	Mueve una piezas a la posicion que se pasa como parametro
 	NO MOVER A MENOS QUE SE HAYA COMPROBADO QUE ES UN MOVIMIENTO VÁLIDO
+	CUANDO SE MUEVA UNA PIEZA EL ESPACIO EN DONDE ESTABA SE ASIGNA A CERO
+	PARA SABER QUE ESTA DISPONIBLE
 	"""
 	def mueve(pieza, coordenada):
 		#Checar si es peón rey o torre y cmabiar su variable movida

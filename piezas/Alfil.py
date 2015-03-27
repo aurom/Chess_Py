@@ -1,6 +1,8 @@
 #-*- coding: utf-8 -*-
 from Pieza import Pieza
 from Color import Color 
+from Tablero import Tablero
+from Peon import Peon
 """Clase para pieza Alfil""" 
 class Alfil(Pieza):
 	""" Constructor de Alfil
@@ -12,16 +14,71 @@ class Alfil(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		return "♜"
+		if (self.color == Color.blanco): return "♗"
+		else : return "♝"
 
 	#@Override
-	def get_movimientos(self):
-		pass
+	def get_movimientos(self, tablero):
+		"""Revisaremos sus cuatro diagonales"""
+		matriz = tablero.getTablero()
+		x = self._current[0]
+		y = self._current[1]
+		color = self.get_color() 
+		lista = list() #lista de movimientos
 
-	"""@Override Regresa la tupla que contiene la posicion"""
-	def get_posicion(self):
-		return self._current
+		i = x-1
+		j = y-1
+		while self.enRango(i) and self.enRango(j): #Diagonal superior izquierda los indices irán de -1 en -1
+			if (matriz[i][j] == 0): #Hay un lugar disponible
+				lista.append((i, j))
+			elif (matriz[i][j] != 0 and matriz[i][j].get_color() != color): #Se encuentra un apieza de diferente color
+				lista.append((i, j))
+				break 
+			else:
+				break #se encontró una pieza de su color
+			i -= 1
+			j -= 1
 
-	"""@Override"""
-	def get_color(self):
-		return self.color 	
+		#Esquina superior derecha indice i va de -1 en -1 e indice j de i en 1
+		i = x-1
+		j = y+1
+		while self.enRango(i) and self.enRango(j):
+			if (matriz[i][j] == 0): #Hay un lugar disponible
+				lista.append((i, j))
+			elif (matriz[i][j] != 0 and matriz[i][j].get_color() != color): #Se encuentra un apieza de diferente color
+				lista.append((i, j))
+				break 
+			else:
+				break #se encontró una pieza de su color
+			i -= 1
+			j += 1
+
+		#Esquina inferior izquierda
+		i = x+1
+		j = y-1
+		while self.enRango(i) and self.enRango(j):
+			if (matriz[i][j] == 0): #Hay un lugar disponible
+				lista.append((i, j))
+			elif (matriz[i][j] != 0 and matriz[i][j].get_color() != color): #Se encuentra un apieza de diferente color
+				lista.append((i, j))
+				break 
+			else:
+				break #se encontró una pieza de su color
+			i += 1
+			j -= 1
+
+		#esquina inferior derecha
+		i = x+1
+		j = y+1
+		while self.enRango(i) and self.enRango(j):
+			if (matriz[i][j] == 0): #Hay un lugar disponible
+				lista.append((i, j))
+			elif (matriz[i][j] != 0 and matriz[i][j].get_color() != color): #Se encuentra un apieza de diferente color
+				lista.append((i, j))
+				break 
+			else:
+				break #se encontró una pieza de su color
+			i += 1
+			j += 1
+
+		return lista 
