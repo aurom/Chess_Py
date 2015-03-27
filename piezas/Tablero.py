@@ -4,7 +4,7 @@ class Tablero(object):
 		self.tablero = [[0 for x in range(8)] for x in range(8)] 
 		#falta inicar todas las piezas en el lugar done les corresponde
 		#Falta poner siempre posicion actual del rey
-		
+	
 
 	"""Regresa la matriz donde se encuentran todas las piezas"""
 	def getTablero(self):
@@ -16,6 +16,11 @@ class Tablero(object):
 		pos = pieza.get_posicion()
 		self.tablero[pos[0]][pos[1]] = pieza
 
+
+	"""Recibe n argumentos (Piezas) y las agrega"""
+	def agregaMuchasPiezas(self, *args):
+		for p in args:
+			self.agregaPieza(p)
 	"""
 	Mueve una piezas a la posicion que se pasa como parametro
 	NO MOVER A MENOS QUE SE HAYA COMPROBADO QUE ES UN MOVIMIENTO VÁLIDO
@@ -24,6 +29,4 @@ class Tablero(object):
 		#Checar si es peón rey o torre y cmabiar su variable movida
 		pass 
 
-	"""Elimina la pieza del tablero en caso de ser comida"""
-	def eliminar_pieza(pieza):
-		pass
+

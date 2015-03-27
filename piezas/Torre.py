@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+
 from Pieza import Pieza
 from Color import Color 
 """Clase para pieza torre""" 
