@@ -2,7 +2,7 @@
 from Tablero import Tablero
 from Pieza import Pieza
 from Color import Color 
-from Peon import Peon
+
 
 """Clase para pieza torre""" 
 class Torre(Pieza):
