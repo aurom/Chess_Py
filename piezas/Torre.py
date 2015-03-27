@@ -11,7 +11,7 @@ class Torre(Pieza):
 		Recibe también un color de la clase Enum Color
 	"""
 	def __init__(self, _current, color):
-		super(Torre, self).__init__(_current, color) #LLama al constructor de la super clas
+		super(Torre, self).__init__(_current, color, "T") #LLama al constructor de la super clas
 		self.movida = False #si se mueve ya no puede enrocar por ese lado
 
 	#Tostring 

@@ -12,6 +12,7 @@ class Pieza():
 	def __init__(self, _current, color):
 		self._current = _current
 		self.color = color 
+		self.tipo = tipo 
 
 	"""Regresa una lista de tuplas con los movimientos 
 	posibles de la pieza"""

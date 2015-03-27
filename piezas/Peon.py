@@ -10,7 +10,7 @@ class Peon(Pieza):
 		Recibe también un color de la clase Enum Color
 	"""
 	def __init__(self, _current, color):
-		super(Peon, self).__init__(_current, color) #LLama al constructor de la super clase
+		super(Peon, self).__init__(_current, color, "P") #LLama al constructor de la super clase
 		self.movida = False 
 		
 	#Tostring 
