@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from Pieza import Pieza
 from Color import Color 
+from Tablero import Tablero
 """Clase para pieza Caballo""" 
 class Caballo(Pieza):
 	""" Constructor de Caballo
@@ -12,18 +13,83 @@ class Caballo(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		return "♜"
+		if color == Color.blanco: return "♗"
+		else: return "♝" 
 
 	#@Override
-	def get_movimientos(self):
-		#siempre checar si pone en jaque al rey
-		pass
+	def get_movimientos(self, tablero):
+		matriz = tablero.getTablero()
+		x = self._current[0]
+		y = self._current[1]
+		color = self.get_color() 
+		lista = list() #lista de movimientos
+		
+		"se checan todos los patrones de moviemientos posibles del caballo"
+		i = x-2
+		j = y+1
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
 
-	"""@Override Regresa la tupla que contiene la posicion"""
-	def get_posicion(self):
-		return self._current
 
-	"""@Override"""
-	def get_color(self):
-		return self.color 	
+		i = x-1
+		j = y+2
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
 
+		i = x+1
+		j = y+2
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+
+		i = x+2
+		j = y+1
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+		i = x+2
+		j = y-1
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+		i = x+1
+		j = y-2
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+
+		i = x-2
+		j = y-1
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+		i = x-1
+		j = y-2
+		if (self.enRango(i) and self.enRango(j)):
+			if (matriz[i][j] == 0):
+				lista.append((i, j))
+			elif (color != matriz[i][j].get_color()): #Entonces no está vacío 
+				lista.append((i, j))
+
+		return lista
