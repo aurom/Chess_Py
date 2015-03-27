@@ -36,7 +36,8 @@ class Peon(Pieza):
 		x = self._current[0]
 		y = self._current[1]
 		color = self.get_color() 
-		lista = list() #lista de movimiento
+		lista = list() #lista de movimientos
+
 		if (self.enRango(x-2) and self.enRango(x-1) and (not self.movida)): #peon avanza dos lugares
 			if (matriz[x-1][y] == 0 and matriz[x-2][y] == 0): #no tiene a nadie adelante
 				lista.append((x-2, y))
