@@ -12,7 +12,6 @@ class Pieza():
 	def __init__(self, _current, color):
 		self._current = _current
 		self.color = color 
-		self.tipo = tipo 
 
 	"""Regresa una lista de tuplas con los movimientos 
 	posibles de la pieza"""
@@ -40,6 +39,10 @@ class Pieza():
 	rango valido del tamaño de la matriz"""
 	def enRango(self, n): 
 		return n <= 7 and n >= 0
+
+	"""Regresa el nombre de la clase"""
+	def getClass(self):
+		return self.__class__.__name__
 
 	
 

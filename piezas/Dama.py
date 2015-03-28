@@ -8,7 +8,7 @@ class Dama(Pieza):
 		Recibe también un color de la clase Enum Color
 	"""
 	def __init__(self, _current, color):
-		super(Dama, self).__init__(_current, color, "D") #LLama al constructor de la super clas
+		super(Dama, self).__init__(_current, color) #LLama al constructor de la super clas
 		
 	#Tostring 
 	def __str__(self):

@@ -2,6 +2,9 @@
 from Pieza import Pieza
 from Color import Color 
 from Tablero import Tablero
+from Alfil import Alfil
+from Dama import Dama
+
 """Clase para pieza Rey""" 
 class Rey(Pieza):
 	""" Constructor de Rey
@@ -9,7 +12,7 @@ class Rey(Pieza):
 		Recibe también un color de la clase Enum Color
 	"""
 	def __init__(self, _current, color):
-		super(Rey, self).__init__(_current, color, "R") #LLama al constructor de la super clas
+		super(Rey, self).__init__(_current, color) #LLama al constructor de la super clas
 		
 	#Tostring 
 	def __str__(self):
@@ -89,26 +92,103 @@ class Rey(Pieza):
 		i = x-1
 		while self.enRango(i): #Revisa hacia arriba del tablero
 			#Si se encuentra una pieza de dieferente color debe ser Torre o dama para ser jaque
-			if (matriz[i][y] != 0 and matriz[i][y].get_color() != self.color):
-				pieza = matriz[i][y] 
-				if (pieza.tipo == "D" or pieza.tipo == "T"):
+			pieza = matriz[i][y]
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Torre"): 
 					return True 
-			elif (matriz[i][y] != 0 and matriz[i][y].get_color() == self.color): 
+			elif (pieza != 0 and pieza.get_color() == self.color): 
 				break #se encontró una pieza suya en la columna 
 			i -= 1
 
 		i = x+1
 		while self.enRango(i): #Revisa hacia aabajo del tablero
 			#Si se encuentra una pieza de dieferente color debe ser Torre o dama para ser jaque
-			if (matriz[i][y] != 0 and matriz[i][y].get_color() != self.color):
-				pieza = matriz[i][y] 
-				if (pieza.tipo == "D" or pieza.tipo == "T"):
+			pieza = matriz[i][y] 
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Torre"):
 					return True 
-			elif (matriz[i][y] != 0 and matriz[i][y].get_color() == self.color): 
+			elif (pieza != 0 and pieza.get_color() == self.color): 
 				break #se encontró una pieza suya en la columna 
 			i += 1
+		#Revisa en la misma fila  a la derecha
+		j = y+1
+		while self.enRango(j):
+			#Si se encuentra una pieza de dieferente color debe ser Torre o dama para ser jaque
+			pieza = matriz[x][j] 
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Torre"):
+					return True 
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break #se encontró una pieza suya en la columna 
+			j += 1
 
-		
+		#Revisa en la misma fila  a la Izquierda
+		j = y-1
+		while self.enRango(j):
+			#Si se encuentra una pieza de dieferente color debe ser Torre o dama para ser jaque
+			pieza = matriz[x][j] 
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Torre"):
+					return True 
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break #se encontró una pieza suya en la columna 
+			j -= 1
+
+		#Revisa diagonal superior izq
+		i = x-1
+		j = y-1
+		while self.enRango(i) and self.enRango(j): 
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Alfil"):
+					return True
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break 
+			i -= 1
+			j -= 1
+
+		#Revisa diagonal superior derecha
+		i = x-1
+		j = y+1
+		while self.enRango(i) and self.enRango(j): 
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Alfil"):
+					return True
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break 
+			i -= 1
+			j += 1
+
+		#Revisa diagonal inferior izq
+		i = x+1
+		j = y-1
+		while self.enRango(i) and self.enRango(j): 
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Alfil"):
+					return True
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break 
+			i += 1
+			j -= 1
+
+		#Revisa diagonal inferior derecha
+		i = x+1
+		j = y+1
+		while self.enRango(i) and self.enRango(j): 
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != self.color):
+				if (pieza.getClass() == "Dama" or pieza.getClass() == "Alfil"):
+					return True
+			elif (pieza != 0 and pieza.get_color() == self.color): 
+				break 
+			i += 1
+			j += 1
+
+		return False 
+
+
 
 
 	"""PRIVADO comprueba si el rey ESTARÁ en jaque en la posicion dada como parametro"""
@@ -117,15 +197,8 @@ class Rey(Pieza):
 
 if __name__ == '__main__':
 	t = Tablero()
+	matrix = t.getTablero()
 	r = Rey((3, 4), Color.blanco)
-	t.agregaPieza(r)
-	lista = r.get_movimientos(t)
-	assert (2, 4) in lista
-	assert (2, 5) in lista
-	assert (2, 3) in lista
-	assert (3, 3) in lista
-	assert (4, 3) in lista
-	assert (4, 4) in lista
-	assert (3, 5) in lista
-	assert (3, 5) in lista
-	print (lista)
+	d = Dama((3, 7), Color.negro)
+	t.agregaMuchasPiezas(r, d)
+	assert r.esta_en_jaque(t) == True

@@ -9,7 +9,7 @@ class Caballo(Pieza):
 		Recibe también un color de la clase Enum Color
 	"""
 	def __init__(self, _current, color):
-		super(Caballo, self).__init__(_current, color, "C") #LLama al constructor de la super clas
+		super(Caballo, self).__init__(_current, color) #LLama al constructor de la super clas
 		
 	#Tostring 
 	def __str__(self):
