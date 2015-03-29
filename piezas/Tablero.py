@@ -21,6 +21,13 @@ class Tablero(object):
 	def agregaMuchasPiezas(self, *args):
 		for p in args:
 			self.agregaPieza(p)
+
+	"""Elimina una pieza del tablero, 
+	recibe una tupla de la posicion a eliminar"""
+	def eliminaPieza(self, pos):
+		x = pos[0]
+		y = pos[1]
+		self.tablero[x][y] = 0
 	"""
 	Mueve una piezas a la posicion que se pasa como parametro
 	NO MOVER A MENOS QUE SE HAYA COMPROBADO QUE ES UN MOVIMIENTO VÁLIDO

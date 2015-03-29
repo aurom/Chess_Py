@@ -2,8 +2,7 @@
 from Pieza import Pieza
 from Color import Color 
 from Tablero import Tablero
-from Alfil import Alfil
-from Dama import Dama
+
 
 """Clase para pieza Rey""" 
 class Rey(Pieza):
@@ -110,6 +109,7 @@ class Rey(Pieza):
 			elif (pieza != 0 and pieza.get_color() == self.color): 
 				break #se encontró una pieza suya en la columna 
 			i += 1
+
 		#Revisa en la misma fila  a la derecha
 		j = y+1
 		while self.enRango(j):
@@ -185,20 +185,111 @@ class Rey(Pieza):
 				break 
 			i += 1
 			j += 1
+		#**********Revisa por Caballos ES MUUUUY LARGOOO*********
+		i = x-2
+		j = y+1
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True 
+
+		i = x-1
+		j = y+2
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+
+		i = x+1
+		j = y+2
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+
+		i = x+2
+		j = y+1
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+
+		i = x+2
+		j = y-1
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+		i = x+1
+		j = y-2
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+		i = x-1
+		j = y-2
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+					return True
+
+		i = x-2
+		j = y-1
+		if self.enRango(i) and self.enRango(j):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.get_color() != color and pieza.getClass() == 'Caballo'):
+				return True
+
+		#***Fin del caballo***
+		#checa por jques por peon según color
+		if (self.color == Color.blanco): #Si es blaco checa diagonales superiores
+			i = x-1
+			j = y-1
+			if self.enRango(i) and self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
+					return True 
+
+			i = x-1
+			j = y+1
+			if self.enRango(i) and self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
+					return True 
+
+		else: #Ees un rey negro
+
+			i = x+1
+			j = y-1
+			if self.enRango(i) and self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
+					return True 
+
+			i = x+1
+			j = y+1
+			if self.enRango(i) and self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
+					return True
 
 		return False 
 
 
-
-
 	"""PRIVADO comprueba si el rey ESTARÁ en jaque en la posicion dada como parametro"""
-	def check(self, pos, tablero):
-		return False
+	def check(self, tablero, pos):
+		tablero_tmp = Tablero()
+		#Hago un tablero temporal para simular el movimiento
+		tablero_tmp.tablero = tablero.tablero 
+		rey = Rey(pos, self.get_color())
+		 
 
-if __name__ == '__main__':
-	t = Tablero()
-	matrix = t.getTablero()
-	r = Rey((3, 4), Color.blanco)
-	d = Dama((3, 7), Color.negro)
-	t.agregaMuchasPiezas(r, d)
-	assert r.esta_en_jaque(t) == True
+		tablero_tmp.eliminaPieza(self._current)
+		tablero_tmp.agregaPieza(rey)
+
+		return rey.esta_en_jaque(tablero_tmp)
