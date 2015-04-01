@@ -2,7 +2,7 @@
 from Pieza import Pieza
 from Color import Color 
 from Tablero import Tablero
-from Peon import Peon
+
 """Clase para pieza Alfil""" 
 class Alfil(Pieza):
 	""" Constructor de Alfil

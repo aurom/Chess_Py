@@ -12,7 +12,7 @@ class Rey(Pieza):
 	"""
 	def __init__(self, _current, color):
 		super(Rey, self).__init__(_current, color) #LLama al constructor de la super clas
-		
+		self.movida = False
 	#Tostring 
 	def __str__(self):
 		if (self.color == Color.blanco):
@@ -22,6 +22,7 @@ class Rey(Pieza):
 
 	#@Override
 	def get_movimientos(self, tablero):
+		#NOTA: FAlta enroque
 		matriz = tablero.getTablero()
 		x = self._current[0]
 		y = self._current[1]

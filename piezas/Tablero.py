@@ -6,6 +6,7 @@ class Tablero(object):
 		#Falta poner siempre posicion actual del rey
 	
 
+	#Es como el toString del tablero solo imprime el contenido 
 	def __str__(self):
 		res = ""
 		for filas in self.tablero:
@@ -22,12 +23,8 @@ class Tablero(object):
 		tabla = self.tablero
 		return tabla 
 
-	def setTablero(self, tablero):
-		self.tablero = tablero 
-
-
 	"""Agrega una pieza al tablero en la 
-	posicion que se pasa como parametro"""
+	que se pasa como parametro"""
 	def agregaPieza(self, pieza):
 		pos = pieza.get_posicion()
 		self.tablero[pos[0]][pos[1]] = pieza
@@ -50,8 +47,22 @@ class Tablero(object):
 	CUANDO SE MUEVA UNA PIEZA EL ESPACIO EN DONDE ESTABA SE ASIGNA A CERO
 	PARA SABER QUE ESTA DISPONIBLE
 	"""
-	def mueve(pieza, coordenada):
-		#Checar si es peón rey o torre y cmabiar su variable movida
-		pass 
+	def mueve(self, pieza, coordenada):
+		#NOTA: Checar si es peón rey o torre y cmabiar su variable movida; Falta enroque
+		movimientos = pieza.get_movimientos(self)
+		if (not coordenada in movimientos): #No es un movimiento válido
+			return 
+		else: #Lo movemos
+			self.eliminaPieza(pieza.get_posicion()) #eliminamos la pieza del tablero
+			x = coordenada[0]
+			y = coordenada[1]
+			self.tablero[x][y] = pieza
+
+			# si es Peon o Torre o Rey su variable movida se cambia 
+			if (pieza.getClass() == 'Peon' or pieza.getClass() == 'Rey' 
+				or pieza.getClass() == 'Torre'):
+
+				pieza.movida = True 
+
 
 
