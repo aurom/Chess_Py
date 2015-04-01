@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 from Pieza import Pieza
 from Color import Color 
-from Tablero import Tablero
 """Clase para pieza Caballo""" 
 class Caballo(Pieza):
 	""" Constructor de Caballo
@@ -13,8 +12,8 @@ class Caballo(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		if color == Color.blanco: return "♗"
-		else: return "♝" 
+		if self.color == Color.blanco: return "♞" 
+		else: return "♘"
 
 	#@Override
 	def get_movimientos(self, tablero):

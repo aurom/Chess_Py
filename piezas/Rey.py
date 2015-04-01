@@ -2,7 +2,6 @@
 import copy #para copiar objetos
 from Pieza import Pieza
 from Color import Color 
-from Tablero import Tablero
 
 """Clase para pieza Rey""" 
 class Rey(Pieza):
@@ -15,10 +14,9 @@ class Rey(Pieza):
 		self.movida = False
 	#Tostring 
 	def __str__(self):
-		if (self.color == Color.blanco):
-			return "♔"
-		else:
-			return "♚"
+		if (self.color == Color.blanco): return "♚"
+		else: return "♔"
+			
 
 	#@Override
 	def get_movimientos(self, tablero):
@@ -295,4 +293,6 @@ class Rey(Pieza):
 		tablero_tmp.eliminaPieza(self.get_posicion())
 		tablero_tmp.agregaPieza(rey)
 
+		#***Checa si el rey contrario domina las casillas***
+		
 		return rey.esta_en_jaque(tablero_tmp)

@@ -1,5 +1,4 @@
 #-*- coding: utf-8 -*-
-from Tablero import Tablero
 from Pieza import Pieza
 from Color import Color 
 
@@ -16,7 +15,7 @@ class Torre(Pieza):
 
 	#Tostring 
 	def __str__(self):
-		if (self.get_color() == Color.blanco):
+		if (self.color == Color.blanco):
 			return "♜"
 		else:
 			return "♖"

@@ -29,7 +29,7 @@ class Pieza():
 	Recibe una tupla con su nueva posicion
 	"""
 	def set_posicion(self, act):
-		return self._current
+		self._current = act 
 
 	"""Regresa el color de la pieza"""
 	def get_color(self):

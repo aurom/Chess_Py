@@ -1,8 +1,6 @@
 #-*- coding: utf-8 -*-
 from Pieza import Pieza
 from Color import Color 
-from Tablero import Tablero
-
 """Clase para pieza Alfil""" 
 class Alfil(Pieza):
 	""" Constructor de Alfil
@@ -14,8 +12,8 @@ class Alfil(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		if (self.color == Color.blanco): return "♗"
-		else : return "♝"
+		if (self.color == Color.blanco): return "♝"
+		else : return "♗"
 
 	#@Override
 	def get_movimientos(self, tablero):

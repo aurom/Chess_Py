@@ -1,7 +1,6 @@
 #-*- coding: utf-8 -*-
 from Pieza import Pieza
 from Color import Color
-from Tablero import Tablero
 """Clase para pieza Peon""" 
 class Peon(Pieza):
 
@@ -15,8 +14,8 @@ class Peon(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		if (self.color == Color.blanco): return "♙" 
-		else : return "♟"
+		if (self.color == Color.blanco): return "♟"
+		else : return "♙" 
 
 	
 	"""#@Override"""

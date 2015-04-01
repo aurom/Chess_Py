@@ -1,8 +1,19 @@
+# -*- coding: utf-8 -*-
+from Color import Color
+from Peon import Peon
+from Rey import Rey
+from Torre import Torre
+from Alfil import Alfil
+from Caballo import Caballo
+from Dama import Dama
+
 class Tablero(object):
 	"""Constructor """
 	def __init__(self):
-		self.tablero = [[0 for x in range(8)] for x in range(8)] 
-		#falta inicar todas las piezas en el lugar done les corresponde
+		self.tablero = [[0 for x in range(8)] for x in range(8)]
+		self.init_piezas() #Agrega todas las piezas iniciales
+		self.reyBlanco = (7, 3) #Se guarda siempre la posicion de los reyes
+		self.reyNegro = (0, 3)
 		#Falta poner siempre posicion actual del rey
 	
 
@@ -23,6 +34,9 @@ class Tablero(object):
 		tabla = self.tablero
 		return tabla 
 
+	"""Regresa la pieza que está en la posicion indicada"""
+	def getPieza(self, pos):
+		return self.tablero[pos[0]][pos[1]]
 	"""Agrega una pieza al tablero en la 
 	que se pasa como parametro"""
 	def agregaPieza(self, pieza):
@@ -47,22 +61,94 @@ class Tablero(object):
 	CUANDO SE MUEVA UNA PIEZA EL ESPACIO EN DONDE ESTABA SE ASIGNA A CERO
 	PARA SABER QUE ESTA DISPONIBLE
 	"""
-	def mueve(self, pieza, coordenada):
-		#NOTA: Checar si es peón rey o torre y cmabiar su variable movida; Falta enroque
+	#NOTA: FALTA ENROQUE DEL REY Y JAQUE MATE
+	def mueve(self, coor1, coor2, color):
+		pieza = self.getPieza(coor1)
+		if (pieza == 0): #No hay tal pieza
+			return 
+		if (pieza.get_color() != color): #La pieza en esa coordenada es de otro color
+			return 
+		if (pieza.getClass() == 'Rey'): #Si se quiere mover al rey lo manejamos en otro método
+			self.mueveRey(color, coor2)
+			return 
+
 		movimientos = pieza.get_movimientos(self)
-		if (not coordenada in movimientos): #No es un movimiento válido
+		if (not coor2 in movimientos): #No es un movimiento válido
 			return 
 		else: #Lo movemos
+			if (self.checaRey(color)): #Aquí se debe checar su el rey estará en jaque cuando se mueva la pieza
+				return 
 			self.eliminaPieza(pieza.get_posicion()) #eliminamos la pieza del tablero
-			x = coordenada[0]
-			y = coordenada[1]
+			x = coor2[0]
+			y = coor2[1]
 			self.tablero[x][y] = pieza
+			pieza.set_posicion((x, y)) #Actualizamos la posicion de la pieza
 
 			# si es Peon o Torre o Rey su variable movida se cambia 
-			if (pieza.getClass() == 'Peon' or pieza.getClass() == 'Rey' 
-				or pieza.getClass() == 'Torre'):
-
+			if (pieza.getClass() == 'Peon' or pieza.getClass() == 'Torre'):
 				pieza.movida = True 
+
+	"""Mueve al rey a la coordenada dada como parametro, recibe el color del rey a mover"""
+	def mueveRey(self, color, coor):
+		#Se obtiene la pieza segpun su color, ver constructor de esta clase
+		pieza = self.getPieza(self.reyBlanco)
+		if (color == Color.negro): 
+			pieza = self.getPieza(self.reyNegro)
+
+		movimientos = pieza.get_movimientos(self)
+
+		if (not coor in movimientos): #No es válido el movimiento
+			return 
+		self.eliminaPieza(pieza.get_posicion()) #eliminamos la pieza del tablero
+		x = coor2[0]
+		y = coor2[1]
+		self.tablero[x][y] = pieza
+		pieza.set_posicion((x, y)) #Actualizamos la posicion de la pieza
+		pieza.movida = True # Decimos que ya se movió
+
+
+	"""Regresa True si el rey del color dado como parametro estará en jaque"""
+	def checaRey(self, color):
+		return False 
+
+	"""Inicia las piezas en sus estados iniciales"""
+	def init_piezas(self):
+		#Peones blancos
+		self.tablero[6][0] = Peon((6, 0), Color.blanco)
+		self.tablero[6][1] = Peon((6, 1), Color.blanco)
+		self.tablero[6][2] = Peon((6, 2), Color.blanco)
+		self.tablero[6][3] = Peon((6, 3), Color.blanco)
+		self.tablero[6][4] = Peon((6, 4), Color.blanco)
+		self.tablero[6][5] = Peon((6, 5), Color.blanco)
+		self.tablero[6][6] = Peon((6, 6), Color.blanco)
+		self.tablero[6][7] = Peon((6, 7), Color.blanco)
+		#Piezas blancas
+		self.tablero[7][0] = Torre((7, 0), Color.blanco)
+		self.tablero[7][1] = Caballo((7, 1), Color.blanco)
+		self.tablero[7][2] = Alfil((7, 2), Color.blanco)
+		self.tablero[7][3] = Dama((7, 3), Color.blanco)
+		self.tablero[7][4] = Rey((7, 4), Color.blanco)
+		self.tablero[7][5] = Alfil((7, 5), Color.blanco)
+		self.tablero[7][6] = Caballo((7, 6), Color.blanco)
+		self.tablero[7][7] = Torre((7, 7), Color.blanco)
+		#Peones negros
+		self.tablero[1][0] = Peon((6, 0), Color.negro)
+		self.tablero[1][1] = Peon((6, 1), Color.negro)
+		self.tablero[1][2] = Peon((6, 2), Color.negro)
+		self.tablero[1][3] = Peon((6, 3), Color.negro)
+		self.tablero[1][4] = Peon((6, 4), Color.negro)
+		self.tablero[1][5] = Peon((6, 5), Color.negro)
+		self.tablero[1][6] = Peon((6, 6), Color.negro)
+		self.tablero[1][7] = Peon((6, 7), Color.negro)
+		#Piezas negras
+		self.tablero[0][0] = Torre((0, 0), Color.negro)
+		self.tablero[0][1] = Caballo((0, 1), Color.negro)
+		self.tablero[0][2] = Alfil((0, 2), Color.negro)
+		self.tablero[0][3] = Dama((0, 3), Color.negro)
+		self.tablero[0][4] = Rey((0, 4), Color.negro)
+		self.tablero[0][5] = Alfil((0, 5), Color.negro)
+		self.tablero[0][6] = Caballo((0, 6), Color.negro)
+		self.tablero[0][7] = Torre((0, 7), Color.negro)
 
 
 
