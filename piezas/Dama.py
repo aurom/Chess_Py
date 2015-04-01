@@ -12,7 +12,10 @@ class Dama(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		return "♜"
+		if (self.color == Color.blanco):
+			return "♕"
+		else:
+			return "♛"
 
 	#@Override
 	def get_movimientos(self):

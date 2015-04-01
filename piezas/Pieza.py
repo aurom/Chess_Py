@@ -37,7 +37,6 @@ class Pieza():
 
 	"""Comprueba si dado parametros n se encuentran en el 
 	rango valido del tamaño de la matriz"""
-	@staticmethod
 	def enRango(self, n): 
 		return n <= 7 and n >= 0
 

@@ -1,8 +1,8 @@
 #-*- coding: utf-8 -*-
+import copy #para copiar objetos
 from Pieza import Pieza
 from Color import Color 
 from Tablero import Tablero
-
 
 """Clase para pieza Rey""" 
 class Rey(Pieza):
@@ -15,7 +15,10 @@ class Rey(Pieza):
 		
 	#Tostring 
 	def __str__(self):
-		return "♜"
+		if (self.color == Color.blanco):
+			return "♔"
+		else:
+			return "♚"
 
 	#@Override
 	def get_movimientos(self, tablero):
@@ -28,53 +31,53 @@ class Rey(Pieza):
 		#Trata de moverse arriba
 		i = x-1
 		if self.enRango(i):
-			if (matriz[i][y] == 0 and not (self.check((i, y), tablero))):
+			if (matriz[i][y] == 0 and not (self.check(tablero, (i, y)))):
 				lista.append((i, y))
 
 		#Trata de moverse abajo
 		i = x+1
 		if self.enRango(i):
-			if (matriz[i][y] == 0 and not (self.check((i, y), tablero))):
+			if (matriz[i][y] == 0 and not (self.check(tablero, (i, y)))):
 				lista.append((i, y))
 
 		#Trata de mover a la izq
 		i = y-1
 		if self.enRango(i):
-			if (matriz[x][i] == 0 and not (self.check((x, i), tablero))):
+			if (matriz[x][i] == 0 and not (self.check(tablero, (x, i)))):
 				lista.append((x, i))
 
 		#Trata de mover a la der
 		i = y+1
 		if self.enRango(i):
-			if (matriz[x][i] == 0 and not (self.check((x, i), tablero))):
+			if (matriz[x][i] == 0 and not (self.check(tablero, (x, i)))):
 				lista.append((x, i))
 
 		#Trata de moverse esquina superior izquierda
 		i = x-1
 		j = y-1
 		if self.enRango(i) and self.enRango(j): #
-			if (matriz[i][j] == 0 and not (self.check((i, j), tablero))):
+			if (matriz[i][j] == 0 and not (self.check(tablero, (i, j)))):
 				lista.append((i, j))
 
 		#Trata de moverse esquina superior derecha
 		i = x-1
 		j = y+1
 		if self.enRango(i) and self.enRango(j): #
-			if (matriz[i][j] == 0 and not (self.check((i, j), tablero))):
+			if (matriz[i][j] == 0 and not (self.check(tablero, (i, j)))):
 				lista.append((i, j))
 
 		#Trata de moverse esquina inferior izquierda
 		i = x+1
 		j = y-1
 		if self.enRango(i) and self.enRango(j): #
-			if (matriz[i][j] == 0 and not (self.check((i, j), tablero))):
+			if (matriz[i][j] == 0 and not (self.check(tablero, (i, j)))):
 				lista.append((i, j))
 
 		#Trata de moverse esquina inferior derecha
-		i = x-1
+		i = x+1
 		j = y+1
 		if self.enRango(i) and self.enRango(j): #
-			if (matriz[i][j] == 0 and not (self.check((i, j), tablero))):
+			if (matriz[i][j] == 0 and not (self.check(tablero, (i, j)))):
 				lista.append((i, j))
 
 		return lista	
@@ -185,6 +188,7 @@ class Rey(Pieza):
 				break 
 			i += 1
 			j += 1
+
 		#**********Revisa por Caballos ES MUUUUY LARGOOO*********
 		i = x-2
 		j = y+1
@@ -246,7 +250,8 @@ class Rey(Pieza):
 				return True
 
 		#***Fin del caballo***
-		#checa por jques por peon según color
+
+		#checa por jaques por peon según color
 		if (self.color == Color.blanco): #Si es blaco checa diagonales superiores
 			i = x-1
 			j = y-1
@@ -278,18 +283,15 @@ class Rey(Pieza):
 				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
 					return True
 
-		return False 
+		return False #pasó todas las pruebas no está en jaque
 
 
 	"""PRIVADO comprueba si el rey ESTARÁ en jaque en la posicion dada como parametro"""
-	def check(self, tablero, pos):
-		tablero_tmp = Tablero()
-		#Hago un tablero temporal para simular el movimiento
-		tablero_tmp.tablero = tablero.tablero 
+	def check(self, tabla, pos):
+		tablero_tmp = copy.deepcopy(tabla) #Hago un tablero temporal para simular el movimiento
 		rey = Rey(pos, self.get_color())
-		 
 
-		tablero_tmp.eliminaPieza(self._current)
+		tablero_tmp.eliminaPieza(self.get_posicion())
 		tablero_tmp.agregaPieza(rey)
 
 		return rey.esta_en_jaque(tablero_tmp)

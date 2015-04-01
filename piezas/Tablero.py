@@ -6,9 +6,25 @@ class Tablero(object):
 		#Falta poner siempre posicion actual del rey
 	
 
+	def __str__(self):
+		res = ""
+		for filas in self.tablero:
+			for pieza in filas:
+				if (pieza != 0):
+					res += pieza.__str__() + " "
+				else: 
+					res += "0 "
+			res += "\n"
+		return res 
+
 	"""Regresa la matriz donde se encuentran todas las piezas"""
 	def getTablero(self):
-		return self.tablero
+		tabla = self.tablero
+		return tabla 
+
+	def setTablero(self, tablero):
+		self.tablero = tablero 
+
 
 	"""Agrega una pieza al tablero en la 
 	posicion que se pasa como parametro"""
