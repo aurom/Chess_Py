@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from operator import sub
 from Color import Color
 from Peon import Peon
 from Rey import Rey
@@ -111,6 +112,53 @@ class Tablero(object):
 
 		if (not coor in movimientos): #No es válido el movimiento
 			return False 
+		
+		#*********Enroques*********
+		actual = pieza.get_posicion()
+		dif = tuple(map(sub, actual, coor)) #se saca la diferencia 
+		if dif == (0, 2): #Se quiere enrocar a la izq
+			self.eliminaPieza(actual)
+			torre = self.tablero[actual[0]][actual[1]-4]
+			self.eliminaPieza(torre.get_posicion()) #Elimina la torre de la izq
+			x = coor[0]
+			y = coor[1]
+			self.tablero[x][y] = pieza
+			pieza.set_posicion((x, y))
+			torre.set_posicion((x, y+1))
+			self.agregaPieza(torre)
+			pieza.movida = True # Decimos que ya se movió
+			torre.movida = True 
+			#Actualizamos la posicion del rey
+			if (pieza.get_color() == Color.blanco):
+				self.reyBlanco = (x, y)
+			else:
+				self.reyNegro = (x, y)
+
+			return True 
+			
+
+		elif dif == (0, -2): #Enroque a la der
+			self.eliminaPieza(actual)
+			torre = self.tablero[actual[0]][actual[1]+3]
+			self.eliminaPieza(torre.get_posicion()) #Elimina la torre de la der
+			x = coor[0]
+			y = coor[1]
+			self.tablero[x][y] = pieza
+			pieza.set_posicion((x, y))
+			torre.set_posicion((x, y-1))
+			self.agregaPieza(torre)
+			pieza.movida = True # Decimos que ya se movió
+			torre.movida = True 
+			#Actualizamos la posicion del rey
+			if (pieza.get_color() == Color.blanco):
+				self.reyBlanco = (x, y)
+			else:
+				self.reyNegro = (x, y)
+
+			return True 
+
+		#***Fin de enroques*****
+		
 		self.eliminaPieza(pieza.get_posicion()) #eliminamos la pieza del tablero
 		x = coor[0]
 		y = coor[1]

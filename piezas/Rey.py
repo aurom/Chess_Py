@@ -79,6 +79,34 @@ class Rey(Pieza):
 			if (matriz[i][j] == 0 and not (self.check(tablero, (i, j)))):
 				lista.append((i, j))
 
+		#trata de enrocarse ala izq 
+		if (self.movida == False):
+			i = x
+			j = y-1
+			while self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.getClass() == 'Torre' and pieza.get_color() == self.color): # se encontró una torre
+					if pieza.movida == False and not (self.check(tablero, (i, j))):
+						lista.append((i, j+2))
+				elif(pieza != 0 and pieza.getClass() != 'Torre'): 
+					break 
+				j -= 1 
+
+		#Trata de enrocarse a la der
+		if (self.movida == False):
+			i = x
+			j = y+1
+			while self.enRango(j):
+				pieza = matriz[i][j]
+				if (pieza != 0 and pieza.getClass() == 'Torre' and pieza.get_color() == self.color): # se encontró una torre
+					if pieza.movida == False and not (self.check(tablero, (i, j))):
+						lista.append((i, j-1))
+				elif(pieza != 0 and pieza.getClass() != 'Torre'): 
+					break 
+				j += 1
+
+
+
 		return lista	
 
 
