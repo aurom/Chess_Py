@@ -31,7 +31,7 @@ class Rey(Pieza):
 		i = x-1
 		if self.enRango(i):
 			if matriz[i][y] == 0:
-				if not (self.check(tablero, (i, y))):
+				if not (self.check(tablero, (i, y))): #check
 					lista.append((i, y))
 
 		#Trata de moverse abajo
@@ -311,18 +311,70 @@ class Rey(Pieza):
 				if (pieza != 0 and pieza.get_color() != self.color and pieza.getClass() == 'Peon'):
 					return True
 
+		#***Checa si hay reyes***#
+		#Arriba
+		i = x-1
+		j = y
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+		#Abajo
+		i = x+1
+		j = y
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+
+		#der
+		i = x 
+		j = y+1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+		#iz
+		i = x
+		j = y-1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+
+		#esq sup der
+		i = x-1
+		j = y+1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+		#Esq sup izq
+		i = x-1
+		j = y-1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+		#Esq inf der
+		i = x+1
+		j = y+1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
+		#esq inf iz
+		i = x+1
+		j = y-1
+		if self.enRango(i):
+			pieza = matriz[i][j]
+			if (pieza != 0 and pieza.getClass == 'Rey'):
+				return True 
 		return False #pasó todas las pruebas no está en jaque
 
 
 	"""PRIVADO comprueba si el rey ESTARÁ en jaque en la posicion dada como parametro"""
 	def check(self, tabla, pos):
-		#Checa si el rey contrario domina las casillas a las se quiere mover
-		rey_contrario = tabla.getPieza(tabla.reyBlanco)
-		if self.color == Color.blanco:
-			rey_contrario = tabla.getPieza(tabla.reyNegro)
-		mov_rey_contrario = rey_contrario.get_movimientos(tabla)
-		if (pos in mov_rey_contrario):
-			return True 
 
 		tablero_tmp = copy.deepcopy(tabla) #Hago un tablero temporal para simular el movimiento
 		rey = Rey(pos, self.get_color())

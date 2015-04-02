@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from operator import sub
+import sys
+import os
 from Color import Color
 from Peon import Peon
 from Rey import Rey
@@ -15,6 +17,7 @@ class Tablero(object):
 		self.init_piezas() #Agrega todas las piezas iniciales
 		self.reyBlanco = (7, 4) #Se guarda siempre la posicion de los reyes
 		self.reyNegro = (0, 4)
+		self.partida = [] #Lista de los movimientos hechos
 		#Falta poner siempre posicion actual del rey
 	
 
@@ -98,6 +101,15 @@ class Tablero(object):
 			# si es Peon o Torre su variable movida se cambia 
 			if (pieza.getClass() == 'Peon' or pieza.getClass() == 'Torre'):
 				pieza.movida = True 
+			self.partida.append((coor1, coor2))
+
+			#Checamos si es jaque mate para el contrario
+			rey_contrario = self.getPieza(self.reyBlanco)
+			if (color == Color.blanco):
+				rey_contrario = self.getPieza(self.reyNegro)
+			if (rey_contrario.esta_en_jaque(self) and rey_contrario.jaque_mate(self)):
+				print ("JAQUE MATE!! pierde: " + str(rey_contrario.get_color()))
+				os._exit(0) #nos salimos
 
 			return True 
 
