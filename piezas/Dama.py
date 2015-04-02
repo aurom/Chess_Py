@@ -17,7 +17,7 @@ class Dama(Pieza):
 			
 
 	#@Override
-	def get_movimientos(self):
+	def get_movimientos(self, tablero):
 		"""La Dama es básicamente un alfil y una Torre al mismo tiempo así que 
 			es copy-paste de ambos metodos
 		"""	

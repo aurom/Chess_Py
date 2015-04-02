@@ -16,7 +16,7 @@ class Pieza():
 	"""Regresa una lista de tuplas con los movimientos 
 	posibles de la pieza"""
 	@abc.abstractmethod
-	def get_movimientos(self):
+	def get_movimientos(self, tablero):
 		#Algo 
 		return 
 

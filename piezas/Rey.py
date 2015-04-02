@@ -287,12 +287,18 @@ class Rey(Pieza):
 
 	"""PRIVADO comprueba si el rey ESTARÁ en jaque en la posicion dada como parametro"""
 	def check(self, tabla, pos):
+		#Checa si el rey contrario domina las casillas a las se quiere mover
+		rey_contrario = tabla.getPieza(tabla.reyBlanco)
+		if self.color == Color.blanco:
+			rey_contrario = tabla.getPieza(tabla.reyNegro)
+		mov_rey_contrario = rey_contrario.get_movimientos(tabla)
+		if (pos in mov_rey_contrario):
+			return True 
+
 		tablero_tmp = copy.deepcopy(tabla) #Hago un tablero temporal para simular el movimiento
 		rey = Rey(pos, self.get_color())
 
 		tablero_tmp.eliminaPieza(self.get_posicion())
 		tablero_tmp.agregaPieza(rey)
 
-		#***Checa si el rey contrario domina las casillas***
-		
 		return rey.esta_en_jaque(tablero_tmp)

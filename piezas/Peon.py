@@ -70,7 +70,3 @@ class Peon(Pieza):
 			if (matriz[x+1][y-1] != 0 and matriz[x+1][y-1].get_color() != color): #Hay una pieza en su diagonal der y es de diferente color
 				lista.append((x+1, y-1))
 		return lista
-
-if __name__ == '__main__':
-	p = Peon((1, 2), Color.blanco)
-	print (p.getClass())
