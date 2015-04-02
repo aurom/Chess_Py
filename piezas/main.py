@@ -29,11 +29,6 @@ def mueveNegras(tablero):
 		
 if __name__ == '__main__':
 	t = Tablero()
-	t.eliminaPieza((0, 1))
-	t.eliminaPieza((0, 2))
-	t.eliminaPieza((0, 3))
-	t.eliminaPieza((0, 5))
-	t.eliminaPieza((0, 6))
 	print (t)
 
 	"""while True:

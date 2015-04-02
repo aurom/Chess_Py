@@ -30,8 +30,9 @@ class Rey(Pieza):
 		#Trata de moverse arriba
 		i = x-1
 		if self.enRango(i):
-			if (matriz[i][y] == 0 and not (self.check(tablero, (i, y)))):
-				lista.append((i, y))
+			if matriz[i][y] == 0:
+				if not (self.check(tablero, (i, y))):
+					lista.append((i, y))
 
 		#Trata de moverse abajo
 		i = x+1
@@ -330,3 +331,42 @@ class Rey(Pieza):
 		tablero_tmp.agregaPieza(rey)
 
 		return rey.esta_en_jaque(tablero_tmp)
+
+	"""Nos dice si el rey está en jaque mate
+	Se sabe de antemano que el rey está en jaque"""
+	def jaque_mate(self, tablero):
+		lista = self.get_movimientos(tablero)
+		if len(lista) != 0: #si la lista de movimientos no es vacía tiene movimientos posibles
+			return False 
+
+		matriz = tablero.getTablero()
+		#Si no tiene movimientos checamos uno a uno sus piezas y simulamos todos sus movimientos posibles
+		for fila in matriz:
+			for pieza in fila:
+				if (pieza == 0 or pieza.get_color() != self.color):
+					continue
+				elif (pieza != 0 and pieza.get_color() == self.color): #UNa pieza del color del rey en jaque
+					movimientos = pieza.get_movimientos(tablero)
+					for movi in movimientos:
+						if (not self.simula(tablero, pieza, movi)): #simulamos el movimiento en el tablero
+							return False 
+			
+		return True 
+
+	def simula(self, tablero, pieza, movi):
+		tablero_tmp = copy.deepcopy(tablero) #Una coopia del tablero 
+		tablero_tmp.eliminaPieza(pieza.get_posicion())
+		pieza.set_posicion(movi)
+		tablero_tmp.agregaPieza(pieza)
+		#Revisamos si su rey sigue en jaque
+		rey = tablero_tmp.getPieza(tablero_tmp.reyBlanco)
+		if (pieza.get_color() == Color.negro):
+			rey = tablero_tmp.getPieza(tablero_tmp.reyNegro)
+
+		if (rey.esta_en_jaque(tablero_tmp)):
+			return True 
+		return False 
+
+
+
+
